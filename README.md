@@ -1,4 +1,4 @@
-# User Authentication Login System
+# User Authentication System
 
 A production-style authentication backend built using Spring Boot, Spring Security, JWT, MySQL, Swagger, JUnit, and Docker.
 
