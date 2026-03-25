@@ -45,6 +45,7 @@ public class UserServiceTest {
 		User user = new User();
 		user.setEmail("test@test.com");
 		user.setPassword("encoded");
+		user.setVerified(true);
 
 		when(userRepository.findByEmail("test@test.com")).thenReturn(Optional.of(user));
 		when(passwordEncoder.matches("1234", "encoded")).thenReturn(true);
@@ -80,6 +81,7 @@ public class UserServiceTest {
 		User user = new User();
 		user.setEmail("test@test.com");
 		user.setPassword("encoded");
+		user.setVerified(true);
 
 		when(userRepository.findByEmail("test@test.com")).thenReturn(Optional.of(user));
 		when(passwordEncoder.matches("wrong", "encoded")).thenReturn(false);
