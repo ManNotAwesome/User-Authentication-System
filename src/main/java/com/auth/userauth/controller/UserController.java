@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auth.userauth.config.JwtUtil;
+import com.auth.userauth.dto.ForgotPasswordRequest;
 import com.auth.userauth.dto.LoginRequest;
+import com.auth.userauth.dto.OtpRequest;
 import com.auth.userauth.dto.ProfileResponse;
 import com.auth.userauth.dto.RegisterRequest;
+import com.auth.userauth.dto.ResendOtpRequest;
+import com.auth.userauth.dto.ResetPasswordRequest;
 import com.auth.userauth.entity.User;
 import com.auth.userauth.service.UserService;
 
@@ -62,4 +66,25 @@ public class UserController {
 		}
 		return "welcome Adminuuu";
 	}
+
+	@PostMapping("/verify-otp")
+	public String verifyOtp(@RequestBody OtpRequest request) {
+		return userService.verifyOtp(request.getEmail(), request.getOtp());
+	}
+
+	@PostMapping("/forgot-password")
+	public String forgotPassword(@RequestBody ForgotPasswordRequest request) {
+		return userService.forgotPassword(request.getEmail());
+	}
+
+	@PostMapping("/reset-password")
+	public String resetPassword(@RequestBody ResetPasswordRequest request) {
+		return userService.resetPassword(request.getEmail(), request.getOtp(), request.getNewPassword());
+	}
+
+	@PostMapping("/resend-otp")
+	public String resendOtp(@RequestBody ResendOtpRequest request) {
+		return userService.resendOtp(request.getEmail());
+	}
+
 }

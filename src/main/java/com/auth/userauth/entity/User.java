@@ -22,6 +22,12 @@ public class User {
 
 	private String role;
 
+	private String otp;
+
+	private java.time.LocalDateTime otpExpiry;
+
+	private boolean verified;
+
 	public String getRole() {
 		return role;
 	}
@@ -60,6 +66,30 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
+	public java.time.LocalDateTime getOtpExpiry() {
+		return otpExpiry;
+	}
+
+	public void setOtpExpiry(java.time.LocalDateTime otpExpiry) {
+		this.otpExpiry = otpExpiry;
+	}
+
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
 	}
 
 }
