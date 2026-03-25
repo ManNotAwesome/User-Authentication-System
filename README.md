@@ -1,21 +1,49 @@
 # User Authentication Login System
 
-A secure backend authentication system built using Spring Boot, Spring Security, JWT, MySQL, and Docker.
-This project demonstrates user registration, login, JWT-based authorization, role-based access control, API documentation, unit testing, and containerized deployment.
+A production-style authentication backend built using Spring Boot, Spring Security, JWT, MySQL, Swagger, JUnit, and Docker.
+
+This project demonstrates a complete authentication lifecycle including account registration, email OTP verification, JWT-based authorization, password recovery, resend OTP, role-based access control, testing, and containerized deployment.
 
 ---
 
 ## Features
 
-* User Registration with encrypted password storage using BCrypt
-* User Login with JWT token generation
-* Protected Profile API using JWT authentication
-* Role-based Admin endpoint access
-* Global Exception Handling for cleaner API responses
-* Swagger/OpenAPI documentation with Bearer token authorization
-* Unit Testing using JUnit and Mockito
-* Dockerized application for portable deployment
-* MySQL database integration
+### Authentication
+
+* User Registration
+* JWT-based Login Authentication
+* Protected Profile Endpoint
+* Admin Role Endpoint
+
+### Email OTP Verification
+
+* OTP sent during registration
+* Account verification required before login
+* OTP expires after 5 minutes
+* Expired unverified users automatically removed
+* Resend OTP support
+
+### Password Recovery
+
+* Forgot Password OTP via email
+* Reset Password using OTP
+* Invalid OTP handling
+* Expired OTP handling
+
+### Security
+
+* BCrypt password hashing
+* JWT token generation
+* Bearer token authorization
+* Role-based endpoint protection
+
+### Engineering Enhancements
+
+* Swagger/OpenAPI API documentation
+* Global Exception Handling
+* JUnit + Mockito Unit Testing
+* Docker containerization
+* MySQL integration
 
 ---
 
@@ -26,44 +54,36 @@ This project demonstrates user registration, login, JWT-based authorization, rol
 * Spring Security
 * Spring Data JPA
 * MySQL
-* JWT (JSON Web Token)
+* JWT
 * Swagger / OpenAPI
 * JUnit + Mockito
 * Docker
-
----
-
-## Project Structure
-
-src/main/java/com/auth/userauth
-
-├── config
-├── controller
-├── dto
-├── entity
-├── exception
-├── filter
-├── repository
-├── service
+* Java Mail Sender
 
 ---
 
 ## API Endpoints
 
-| Method | Endpoint      | Description                   |
-| ------ | ------------- | ----------------------------- |
-| POST   | /api/register | Register new user             |
-| POST   | /api/login    | Login and receive JWT token   |
-| GET    | /api/profile  | Access profile using JWT      |
-| GET    | /api/admin    | Admin-only protected endpoint |
+| Method | Endpoint             | Description              |
+| ------ | -------------------- | ------------------------ |
+| POST   | /api/register        | Register new user        |
+| POST   | /api/verify-otp      | Verify account using OTP |
+| POST   | /api/resend-otp      | Resend OTP               |
+| POST   | /api/login           | Login and receive JWT    |
+| GET    | /api/profile         | Access profile using JWT |
+| GET    | /api/admin           | Admin-only endpoint      |
+| POST   | /api/forgot-password | Send password reset OTP  |
+| POST   | /api/reset-password  | Reset password using OTP |
 
 ---
 
-## Swagger API Documentation
+## Swagger Documentation
 
-After running the application:
+Run project and open:
 
 http://localhost:8080/swagger-ui/index.html
+
+For protected APIs:
 
 Use Swagger **Authorize** button and enter:
 
@@ -73,7 +93,7 @@ Bearer your_token_here
 
 ## Sample Register Request
 
-```json
+```json id="j6f1lz"
 {
   "name": "test",
   "email": "test@test.com",
@@ -81,12 +101,36 @@ Bearer your_token_here
 }
 ```
 
-## Sample Login Request
+---
 
-```json
+## Sample Verify OTP Request
+
+```json id="a2w8pd"
 {
   "email": "test@test.com",
-  "password": "1234"
+  "otp": "123456"
+}
+```
+
+---
+
+## Sample Forgot Password Request
+
+```json id="n4m3kr"
+{
+  "email": "test@test.com"
+}
+```
+
+---
+
+## Sample Reset Password Request
+
+```json id="s9u7yc"
+{
+  "email": "test@test.com",
+  "otp": "123456",
+  "newPassword": "new1234"
 }
 ```
 
@@ -96,13 +140,13 @@ Bearer your_token_here
 
 Build image:
 
-```bash
+```bash id="r5v2xe"
 docker build -t user-auth-system .
 ```
 
 Run container:
 
-```bash
+```bash id="q8n6tm"
 docker run -p 8080:8080 user-auth-system
 ```
 
@@ -116,20 +160,8 @@ docker run -p 8080:8080 user-auth-system
 
 ---
 
-## Security Features
-
-* BCrypt password hashing
-* JWT token expiration
-* Bearer token authentication filter
-* Role-based endpoint protection
-
----
-
 ## Future Improvements
 
-* Refresh Token support
-* Email verification
-* Password reset flow
-* Cloud deployment
-
----
+* Refresh Token Support
+* Cloud Deployment
+* CI/CD Integration
