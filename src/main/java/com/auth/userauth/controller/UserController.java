@@ -15,6 +15,8 @@ import com.auth.userauth.dto.RegisterRequest;
 import com.auth.userauth.entity.User;
 import com.auth.userauth.service.UserService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -27,23 +29,20 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String registerUser(@RequestBody RegisterRequest request) {
-		try {
-			userService.registerUser(request);
-			return "User registered successfully";
-		} catch (IllegalArgumentException e) {
-			return e.getMessage();
-		}
+
+		userService.registerUser(request);
+		return "User registered successfully";
+
 	}
 
 	@PostMapping("/login")
 	public String loginUser(@RequestBody LoginRequest request) {
-		try {
-			return userService.loginUser(request);
-		} catch (IllegalArgumentException e) {
-			return e.getMessage();
-		}
+
+		return userService.loginUser(request);
+
 	}
 
+	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/profile")
 	public ProfileResponse profile() {
 
@@ -51,6 +50,7 @@ public class UserController {
 		return userService.getProfile(email);
 	}
 
+	@SecurityRequirement(name = "bearerAuth")
 	@GetMapping("/admin")
 	public String admin() {
 		String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
